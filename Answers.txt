@@ -47,3 +47,8 @@ such as search, grouping, or server-side filtering to be introduced when justifi
 9. Avoiding use of UI Library that uses unnecessary JS processing(Ex: Modals, side drawers or animations)
 
 When serving the list, the main Concern should the usability, performance and simplicity not aesthetics.
+
+10. Use Redis caching
+
+Cache data to redis when loading data from DB. Since DB data can be changing, caching strategy must be properly implemented
+When updating data, delete the cache key and load from DB when there is no cache. 
