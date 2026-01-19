@@ -1,0 +1,49 @@
+Optimized Development Approach – Sensor Selection UI
+
+The solution focuses on optimizing data flow, rendering behavior, and user experience while 
+keeping the implementation simple and scalable.
+
+
+1. Location-first Data Partitioning
+The application enforces Data Center Location selection as the primary interaction before loading 
+any sensor data. Sensors are not fetched or rendered globally. This ensures that only a relevant 
+subset of sensors is handled at any time, reducing unnecessary data processing, memory usage, 
+and rendering cost as the dataset grows.
+
+2. Progressive Disclosure Without Overloading the UI
+Sensor lists are intentionally hidden until a location is selected. 
+This progressive disclosure approach prevents users from being overwhelmed 
+by large datasets and guides them through a clear and predictable workflow. 
+Users interact with sensors only when sufficient context (location) is established.
+
+3. Clean Separation of Concerns
+The implementation separates responsibilities clearly:
+- A data-access layer simulates API calls for retrieving locations and sensors.
+- UI components are modular and focused on a single responsibility (location selection, sensor list, action actions).
+This improves maintainability and allows future enhancements, such as real APIs or 
+caching, without restructuring the application.
+
+4. Efficient State Modeling
+Selected sensors are tracked using a Set of sensor IDs rather than arrays. 
+This allows constant-time lookups and avoids repeated array scans during rendering. 
+State updates are localized to selection changes, minimizing unnecessary recalculation and re-rendering.
+
+5. Render-Aware Component Structure
+The sensor list is structured so that state changes related to selection do not require the entire list 
+to re-render. The component design supports memoization and future list virtualization, making the UI 
+responsive even when handling large numbers of sensors per location.
+
+7. Deferred Search to Avoid Premature Complexity
+Search functionality was intentionally not included in the initial implementation. Location-based filtering 
+already significantly reduces the dataset size. Introducing search early would add additional complexity such 
+as debouncing, filtering logic, and increased render overhead. The current architecture allows search to be 
+added later without altering the core data flow.
+
+8. Scalability-Oriented Design Decisions
+Bulk selection actions, disabled confirmation states, and clear empty and loading states improve usability 
+when dealing with larger datasets. The overall structure is designed to scale incrementally, allowing features 
+such as search, grouping, or server-side filtering to be introduced when justified by real usage patterns.
+
+9. Avoiding use of UI Library that uses unnecessary JS processing(Ex: Modals, side drawers or animations)
+
+When serving the list, the main Concern should the usability, performance and simplicity not aesthetics.
