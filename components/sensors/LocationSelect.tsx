@@ -68,8 +68,7 @@ function LocationSelectComponent({
               <div className="flex items-center justify-between gap-4">
                 <span className="font-medium">{location.name}</span>
                 <span className="text-xs text-muted-foreground">
-                  {location.region && `${location.region} · `}
-                  {location.sensorCount} sensors
+                  {location.sensorCount.toLocaleString()} sensors
                 </span>
               </div>
             </SelectItem>
